@@ -9,7 +9,7 @@ class ShogiGame:
         super().__init__()
         self.status = 0
         self.current_player = 0
-        self.board = self.initialize_board2()
+        self.board = self.initialize_board()
 
     # When given a position, it returns the name of the piece that should be
     # placed there at the start
@@ -63,33 +63,6 @@ class ShogiGame:
         board = []
 
         for row in range(6):
-            row_list = []
-            for column in range(9):
-                piece_type = self.get_piece_from_position(row*9+column)
-                if piece_type != "NONE":
-                    row_list.append(Piece.create_valid_piece(
-                        [row, column], 0, piece_type))
-                else:
-                    row_list.append(None)
-            board.append(row_list)
-
-        for row in range(6, 9):
-            row_list = []
-            for column in range(9):
-                piece_type = self.get_piece_from_position(row*9+column)
-                if piece_type != "NONE":
-                    row_list.append(Piece.create_valid_piece(
-                        [row, column], 1, piece_type))
-                else:
-                    row_list.append(None)
-            board.append(row_list)
-
-        return board
-
-    def initialize_board2(self):
-        board = []
-
-        for row in range(6):
             for column in range(9):
                 piece_type = self.get_piece_from_position(row*9+column)
                 if piece_type != "NONE":
@@ -104,7 +77,7 @@ class ShogiGame:
                         [row, column], 1, piece_type))
         return board
 
-    def draw_board2(self):
+    def draw_board(self):
         print("   0  1  2  3  4  5  6  7  8")
         print("+-----------------------------+")
         for row in range(9):
@@ -125,22 +98,6 @@ class ShogiGame:
             print("=========== White(v) ===========")
         elif self.current_player ==1:
             print("=========== Black(^) ===========")
-        
-
-    def draw_board(self):
-        print("   0  1  2  3  4  5  6  7  8")
-        print("+-----------------------------+")
-        for row in range(9):
-            line_string = str(row) + "| "
-            for column in range(9):
-                if self.board[row][column] != None:
-                    string = self.board[row][column].get_piece_symbol()
-                    line_string = line_string + string + " "
-                else:
-                    line_string = line_string + "   "
-            line_string = line_string + "|"
-            print(line_string)
-        print("+-----------------------------+")
 
     def play_turn(self):
 
@@ -321,4 +278,4 @@ current_game = ShogiGame()
 current_game.draw_board2()
 while(current_game.status == 0):
     current_game.play_turn()
-    current_game.draw_board2()
+    current_game.draw_board()
